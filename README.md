@@ -20,3 +20,8 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+
+## Used libraries
+- Axios: to do the requests to the API
+- vue-chartjs: to visualize the data that are fetched from the API
