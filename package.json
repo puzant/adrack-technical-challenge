@@ -1,0 +1,24 @@
+{
+  "name": "adrack-technical-challenge",
+  "version": "1.0.0",
+  "description": "My marvelous Nuxt.js project",
+  "author": "Puzant",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "@nuxtjs/axios": "latest",
+    "chart.js": "^2.9.3",
+    "hchs-vue-charts": "^1.2.8",
+    "nuxt": "^2.0.0",
+    "vue-chartjs": "^3.5.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0"
+  }
+}
