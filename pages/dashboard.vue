@@ -2,6 +2,15 @@
   <div class="container">
     <h1>Dashboard Page</h1>
 
+    <v-alert v-if="errorDetected"
+      class="mt-4"
+      dense
+      outlined
+      type="error"
+    >
+      There was an error while getting the chart data
+    </v-alert>
+
     <div class="loader-container">
       <img v-if="!loaded" class="chart-loader mt-3" src="../static/loader-dotted.gif" alt="">
     </div>
@@ -21,7 +30,8 @@ export default {
     return {
       values: [],
       customValues: [],
-      loaded: false
+      loaded: false,
+      errorDetected: false
     }
   },
   head() {
@@ -43,20 +53,24 @@ export default {
     requestData() {
       this.loaded = false
       //  added a delay of 2 seconds to simulate a real server delay
-      fetch(" http://www.mocky.io/v2/5eda474f330000fefc79eab4?mocky-delay=2000ms")
-        .then(response => response.json())
-        .then(json => {
-        this.values = json.data.value
+      // fetch("http://www.mocky.io/v2/5eda474f330000fefc79eab4?mocky-delay=2000ms")
+      //   .then(response => response.json())
+      //   .then(json => {
+      //   this.values = json.data.value
+      //   this.loaded = true
+      // })
+        this.$axios.get('http://www.mocky.io/v2/5eda474f330000fefc79eab4?mocky-delay=2000ms').then(response => {
+        console.log("requestData -> response", response)
+        this.values = response.data.data.value
         this.loaded = true
+      }).catch(error => {
+        this.loaded = true
+        this.errorDetected = true
       })
     },
   }
 }
 </script>
-
-<style>
-
-</style>
 
 <style>
 .loader-container {
