@@ -52,13 +52,6 @@ export default {
   methods: {
     requestData() {
       this.loaded = false
-      //  added a delay of 2 seconds to simulate a real server delay
-      // fetch("http://www.mocky.io/v2/5eda474f330000fefc79eab4?mocky-delay=2000ms")
-      //   .then(response => response.json())
-      //   .then(json => {
-      //   this.values = json.data.value
-      //   this.loaded = true
-      // })
         this.$axios.get('http://www.mocky.io/v2/5eda474f330000fefc79eab4?mocky-delay=2000ms').then(response => {
         console.log("requestData -> response", response)
         this.values = response.data.data.value
