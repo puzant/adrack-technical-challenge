@@ -16,6 +16,14 @@
      <strong>Email</strong> or <strong>Password</strong> is wrong
     </v-alert>
 
+    <v-alert v-if="networkError"
+      dense
+      outlined
+      type="error"
+    >
+     There was a network problem, please try again
+    </v-alert>
+
     <h1>Login to the Dashboard</h1>
 
      <p>Use the following Credentials to login to the Dashboard</p>
@@ -65,6 +73,7 @@ export default {
     return {
       missingCredentials: false,
       wrongCredentials: false,
+      networkError: false,
       input: {
         email: "",
         password: ""
@@ -75,21 +84,25 @@ export default {
     login() {
       if(this.input.email == "" || this.input.password == "") {
         this.missingCredentials = true
-      }else if(this.input.email == "eve.holt@reqres.in" && this.input.password == "cityslicka") {
+      } else if(this.input.email == "eve.holt@reqres.in" && this.input.password == "cityslicka") {
           this.$axios
           .$post('https://reqres.in/api/login', {
           email: "eve.holt@reqres.in",
           password: "cityslicka"
           }).then(res => {
-          //  in case the token was wrong redirct back to the login page
-          if(res.token !== "QpwL5tke4Pnpja7X4") {
-            this.redirect('/login')
-        } else {
-          this.$router.push({ path: '/' })
-          //  add the token in the localStorage
-          localStorage.setItem('userToken', res.token)
-      }
-  })
+            //  in case the token was wrong redirct back to the login page
+            if(res.token !== "QpwL5tke4Pnpja7X4") {
+              this.redirect('/login')
+            } else {
+              this.$router.push({ path: '/' })
+              //  add the token in the localStorage
+              localStorage.setItem('userToken', res.token)
+            }
+          }).catch(error => {
+            //  in case of network error
+            this.networkError = true
+            console.log(error)
+          })
       } else {
         this.wrongCredentials = true
       }
@@ -97,6 +110,7 @@ export default {
     muteError() {
       this.missingCredentials ? this.missingCredentials = false : this.missingCredentials;
       this.wrongCredentials ? this.wrongCredentials = false : this.wrongCredentials;
+      this.networkError ? this.networkError = false : this.networkError;
     }
   }
 }
