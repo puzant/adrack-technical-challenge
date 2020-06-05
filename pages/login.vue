@@ -32,6 +32,7 @@
             v-model="input.email"
             :counter="10"
             label="Email"
+            @keypress="muteError()"
             required
           ></v-text-field>
         </v-col>
@@ -46,7 +47,8 @@
           <v-text-field
             v-model="input.password"
             :counter="10"
-            label="Password"    
+            label="Password"
+            @keypress="muteError()"
             required
           ></v-text-field>
         </v-col>
@@ -91,6 +93,10 @@ export default {
       } else {
         this.wrongCredentials = true
       }
+    },
+    muteError() {
+      this.missingCredentials ? this.missingCredentials = false : this.missingCredentials;
+      this.wrongCredentials ? this.wrongCredentials = false : this.wrongCredentials;
     }
   }
 }
