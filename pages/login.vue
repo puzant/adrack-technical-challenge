@@ -26,11 +26,13 @@
 
     <h1>Login to the Dashboard</h1>
 
-     <p>Use the following Credentials to login to the Dashboard</p>
-    <div class="font-weight-light">eve.holt@reqres.in</div>
-    <div class="font-weight-light">cityslicka</div>
+    <div class="credentials mt-2">
+      <p>Use the following Credentials to login to the Dashboard</p>
+      <div class="font-weight-light">eve.holt@reqres.in</div>
+      <div class="font-weight-light">cityslicka</div>
+    </div>
 
-    <v-container class="mt-4">
+    <v-container class="">
       <v-row class="justify-lg-center">
         <v-col 
           cols="12"
