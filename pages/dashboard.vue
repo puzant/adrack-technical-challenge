@@ -53,7 +53,6 @@ export default {
     requestData() {
       this.loaded = false
         this.$axios.get('http://www.mocky.io/v2/5eda474f330000fefc79eab4?mocky-delay=2000ms').then(response => {
-        console.log("requestData -> response", response)
         this.values = response.data.data.value
         this.loaded = true
       }).catch(error => {
@@ -61,6 +60,7 @@ export default {
         this.errorDetected = true
       })
     },
+
   }
 }
 </script>
