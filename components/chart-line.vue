@@ -32,6 +32,11 @@
         //Chart.js options that controls the appearance of the chart
       }
     },
+    watch: {
+      chartData() {
+        this.renderChart(this.datacollection, this.options);
+      }
+    },
     mounted () {
       //renderChart function renders the chart with the datacollection and options object.
       this.renderChart(this.datacollection, this.options)
