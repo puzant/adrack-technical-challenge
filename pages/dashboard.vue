@@ -11,7 +11,7 @@
       There was an error while getting the chart data
     </v-alert>
 
-    <v-btn class="primary" @click="fillData()">Generate New Data</v-btn>
+    <v-btn class="primary" @click="generateNewData()">Generate New Data</v-btn>
 
     <div class="loader-container">
       <img v-if="!loaded" class="chart-loader mt-3" src="../static/loader-dotted.gif" alt="">
@@ -50,24 +50,25 @@ export default {
     }
   },
   created() {
-    this.fillData()
-    // this.requestData()
+    // this.loaded = false
+    // this.fillData()
+    // this.loaded = true
+    this.requestData()
   },
   methods: {
     requestData() {
       this.loaded = false
-        this.$axios.get('http://www.mocky.io/v2/5eda474f330000fefc79eab4').then(response => {
+        this.$axios.get('http://www.mocky.io/v2/5eda474f330000fefc79eab4?mocky-delay=2000ms').then(response => {
         this.values = response.data.data.value
         this.loaded = true
+        this.fillData()
       }).catch(error => {
         this.loaded = true
         this.errorDetected = true
       })
-      this.fillData()
     },
 
     fillData () {
-      this.loaded = false
       this.dataCollection = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
           datasets: [
@@ -76,12 +77,10 @@ export default {
               backgroundColor: "transparent",
               borderColor: "rgba(1, 116, 188, 0.50)",
               pointBackgroundColor: "rgba(171, 71, 188, 1)",
-              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
-              // data: this.values
+              data: this.values
             }
           ]
         }
-        this.loaded = true
       },
 
     getRandomInt() {
