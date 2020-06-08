@@ -50,9 +50,6 @@ export default {
     }
   },
   created() {
-    // this.loaded = false
-    // this.fillData()
-    // this.loaded = true
     this.requestData()
   },
   methods: {
