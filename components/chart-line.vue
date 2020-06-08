@@ -6,23 +6,8 @@
   export default {
     extends: Line,
     mixins: [mixins.reactiveProp],
-    // props:['chartData'],
     data () {
       return {
-        // datacollection: {
-        //   //Data to be represented on x-axis
-        //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        //   datasets: [
-        //     {
-        //       label: "Data 1",
-        //       backgroundColor: "transparent",
-        //       borderColor: "rgba(1, 116, 188, 0.50)",
-        //       pointBackgroundColor: "rgba(171, 71, 188, 1)",
-        //       //Data to be represented on y-axis
-        //       data: this.chartData
-        //     }
-        //   ],
-        // },
         options: {
           responsive: true,
           maintainAspectRatio: false
