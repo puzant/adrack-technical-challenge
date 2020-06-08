@@ -11,11 +11,13 @@
       There was an error while getting the chart data
     </v-alert>
 
+    <v-btn class="primary" @click="fillData()">Generate New Data</v-btn>
+
     <div class="loader-container">
       <img v-if="!loaded" class="chart-loader mt-3" src="../static/loader-dotted.gif" alt="">
     </div>
 
-    <ChartLine v-if="loaded" :chartData="values"/>
+    <ChartLine v-if="loaded" :chart-data="dataCollection" />
   </div>  
 </template>
 
@@ -28,6 +30,7 @@ export default {
   },
   data() {
     return {
+      dataCollection: null,
       values: [],
       customValues: [],
       loaded: false,
@@ -46,20 +49,45 @@ export default {
       ]
     }
   },
-  mounted() {
-    this.requestData()
+  created() {
+    this.fillData()
+    // this.requestData()
   },
   methods: {
     requestData() {
       this.loaded = false
-        this.$axios.get('http://www.mocky.io/v2/5eda474f330000fefc79eab4?mocky-delay=2000ms').then(response => {
+        this.$axios.get('http://www.mocky.io/v2/5eda474f330000fefc79eab4').then(response => {
         this.values = response.data.data.value
         this.loaded = true
       }).catch(error => {
         this.loaded = true
         this.errorDetected = true
       })
+      this.fillData()
     },
+
+    fillData () {
+      this.loaded = false
+      this.dataCollection = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          datasets: [
+            {
+              label: "Data 1",
+              backgroundColor: "transparent",
+              borderColor: "rgba(1, 116, 188, 0.50)",
+              pointBackgroundColor: "rgba(171, 71, 188, 1)",
+              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+              // data: this.values
+            }
+          ]
+        }
+        this.loaded = true
+      },
+
+    getRandomInt() {
+      this.values = []
+      return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+    }
 
   }
 }
