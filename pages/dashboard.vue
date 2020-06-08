@@ -83,9 +83,14 @@ export default {
         }
       },
 
-    getRandomInt() {
+    generateNewData() {
       this.values = []
-      return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+      this.loaded = false
+      for(let i=0; i<7; i++) {
+          this.values.push(Math.floor(Math.random() * (50 - 5 + 1)) + 5)
+      }
+      this.fillData()
+      this.loaded = true
     }
 
   }
