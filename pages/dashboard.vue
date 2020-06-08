@@ -86,11 +86,15 @@ export default {
     generateNewData() {
       this.values = []
       this.loaded = false
-      for(let i=0; i<7; i++) {
-          this.values.push(Math.floor(Math.random() * (50 - 5 + 1)) + 5)
+      //  https://stackoverflow.com/questions/47549891/vue-js-cannot-read-property-push-of-undefined
+      let vm = this
+      setTimeout(function() {
+        for(let i=0; i<7; i++) {
+          vm.values.push(Math.floor(Math.random() * (50 - 5 + 1)) + 5)
       }
-      this.fillData()
-      this.loaded = true
+      vm.fillData()
+      vm.loaded = true
+      }, 1000)
     }
 
   }
