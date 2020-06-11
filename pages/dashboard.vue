@@ -11,13 +11,37 @@
       There was an error while getting the chart data
     </v-alert>
 
+    <v-alert v-if="emptyChartValues"
+      class="mt-4"
+      dense
+      outlined
+      type="error"
+    >
+      Please Provide A value & Month
+    </v-alert>
+        
+    <div class="chart-input-container"> 
+      <input v-model="dataEntry" class="chart-input" placeholder="Add new Data" type="text">
+      <!-- <input v-model="labelEntry" class="chart-input" placeholder="Add new Label" type="text"> -->
+
+      <select class="month-selector" v-model="labelEntry">
+        <option v-for="month in months" :value="month" :key="month" :disabled="isSelectedMonth(month)">
+          {{month}}
+        </option>  
+      </select>
+
+      <v-btn class="primary" @click="updateDataSet()">Add</v-btn>
+    </div>
+    
+    <p class="mt-4">Or</p>
+    
     <v-btn class="primary" @click="generateNewData()">Generate New Data</v-btn>
 
     <div class="loader-container">
       <img v-if="!loaded" class="chart-loader mt-3" src="../static/loader-dotted.gif" alt="">
     </div>
 
-    <ChartLine v-if="loaded" :chart-data="dataCollection" />
+    <ChartLine v-if="loaded" :chart-data="dataCollection" :bind="true" />
   </div>  
 </template>
 
@@ -32,9 +56,14 @@ export default {
     return {
       dataCollection: null,
       values: [],
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       customValues: [],
       loaded: false,
-      errorDetected: false
+      errorDetected: false,
+      emptyChartValues: false,
+      dataEntry: null,
+      labelEntry: 'August'
     }
   },
   head() {
@@ -67,7 +96,7 @@ export default {
 
     fillData () {
       this.dataCollection = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: this.labels,
           datasets: [
             {
               label: "Data 1",
@@ -82,6 +111,8 @@ export default {
 
     generateNewData() {
       this.values = []
+      this.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+
       this.loaded = false
       //  https://stackoverflow.com/questions/47549891/vue-js-cannot-read-property-push-of-undefined
       let vm = this
@@ -92,9 +123,35 @@ export default {
       vm.fillData()
       vm.loaded = true
       }, 1000)
+    },
+
+    updateDataSet() {
+      let vm = this
+      if(this.dataEntry && this.labelEntry) {
+        this.loaded = false
+        this.emptyChartValues ? this.emptyChartValues = false : this.emptyChartValues
+        //  wait 1 second before executing
+        setTimeout(function() {
+          vm.values.push(vm.dataEntry)
+          vm.labels.push(vm.labelEntry)
+          vm.fillData()
+          vm.dataEntry = null
+          vm.loaded = true
+        }, 1000)
+      } else {
+        this.emptyChartValues = true
+      }
+
+    },
+
+    isSelectedMonth(month) {
+      for(let i=0; i<this.labels.length; i++) {
+        if(this.labels[i] == month) 
+          return true
+      }
     }
 
-  }
+  }, 
 }
 </script>
 
@@ -106,5 +163,36 @@ export default {
 
 .chart-loader {
   width: 150px;
+}
+
+.chart-input-container {
+  margin-top: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.chart-input {
+  width: 20%;
+  border: none;
+  border-bottom: 1px solid #111;
+  margin-right: 10px;
+}
+.chart-input:focus {
+  outline: none;
+}
+
+.month-selector {
+  all: unset;
+  font-size: 20px;
+  width: 12%;
+  color: #938b8b;
+  border-radius: none;
+  margin-right: 12px;
+  border-bottom: 1px solid #111;
+}
+
+.month-selector:focus {
+  outline: none;
 }
 </style>
