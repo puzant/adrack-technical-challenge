@@ -126,11 +126,18 @@ export default {
     },
 
     updateDataSet() {
+      let vm = this
       if(this.dataEntry && this.labelEntry) {
+        this.loaded = false
         this.emptyChartValues ? this.emptyChartValues = false : this.emptyChartValues
-        this.values.push(this.dataEntry)
-        this.labels.push(this.labelEntry)
-        this.fillData()
+        //  wait 1 second before executing
+        setTimeout(function() {
+          vm.values.push(vm.dataEntry)
+          vm.labels.push(vm.labelEntry)
+          vm.fillData()
+          vm.dataEntry = null
+          vm.loaded = true
+        }, 1000)
       } else {
         this.emptyChartValues = true
       }
