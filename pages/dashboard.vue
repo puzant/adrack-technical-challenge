@@ -10,15 +10,6 @@
     >
       There was an error while getting the chart data
     </v-alert>
-
-    <v-alert v-if="emptyChartValues"
-      class="mt-4"
-      dense
-      outlined
-      type="error"
-    >
-      Please Provide A value & Month
-    </v-alert>
         
     <div class="chart-input-container"> 
       <input v-model="dataEntry" class="chart-input" placeholder="Add new Data" type="text">
@@ -30,7 +21,7 @@
         </option>  
       </select>
 
-      <v-btn class="primary" @click="updateDataSet()">Add</v-btn>
+      <v-btn class="primary" @click="updateDataSet()" :disabled="!isInputProvided">Add</v-btn>
     </div>
     
     <p class="mt-4">Or</p>
@@ -151,7 +142,15 @@ export default {
       }
     }
 
-  }, 
+  },
+  computed: {
+    isInputProvided() {
+      if(this.dataEntry && this.labelEntry) {
+        return true
+      } 
+      return false
+    }
+  } 
 }
 </script>
 
