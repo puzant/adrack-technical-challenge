@@ -13,7 +13,7 @@
   "dependencies": {
     "@nuxtjs/axios": "latest",
     "axios": "^0.19.2",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "hchs-vue-charts": "^1.2.8",
     "nuxt": "^2.0.0",
     "pug": "^3.0.0",
